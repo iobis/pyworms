@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-from .utils import *
+from .utils import wormsURL, parseLSID
 try:
     from functools import lru_cache
 except ImportError:

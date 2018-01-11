@@ -19,10 +19,17 @@ class Test(unittest.TestCase):
         self.assertIsNotNone(res)
 
         with self.assertRaises(Exception):
-            res = pyworms.aphiaRecordByAphiaID("abcd")
+            pyworms.aphiaRecordByAphiaID("abcd")
 
     def testCache(self):
         pyworms.aphiaRecordByAphiaID.cache_clear()
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
-        res = pyworms.aphiaRecordByAphiaID(123459)
+        pyworms.aphiaRecordByAphiaID(123459)
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
+
+    def testParseLSID(self):
+        id = pyworms.parseLSID("urn:lsid:marinespecies.org:taxname:134546")
+        self.assertEquals(id, "134546")
+
+        id = pyworms.parseLSID("134546")
+        self.assertIsNone(id)
