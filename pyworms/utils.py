@@ -9,3 +9,6 @@ def parseLSID(input):
         return m.group(1)
     else:
         return None
+
+def renderBool(b):
+    return "true" if b else "false"

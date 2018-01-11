@@ -21,6 +21,17 @@ def aphiaRecordByAphiaID(id):
     else:
         raise Exception()
 
+@lru_cache(maxsize=200)
+def aphiaRecordsByName(name, like=True, marine_only=True):
+    url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
+    r = requests.get(url)
+    if r.status_code == 204:
+        return None
+    elif r.status_code == 200:
+        return r.json()
+    else:
+        raise Exception()
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributesByAphiaID(): raise Exception("Method not implemented")
@@ -48,8 +59,6 @@ def aphiaNameByAphiaID(): raise Exception("Method not implemented")
 def aphiaRecordsByDate(): raise Exception("Method not implemented")
 
 def aphiaRecordsByMatchNames(): raise Exception("Method not implemented")
-
-def aphiaRecordsByName(): raise Exception("Method not implemented")
 
 def aphiaRecordsByNames(): raise Exception("Method not implemented")
 

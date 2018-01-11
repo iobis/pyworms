@@ -21,6 +21,14 @@ class Test(unittest.TestCase):
         with self.assertRaises(Exception):
             pyworms.aphiaRecordByAphiaID("abcd")
 
+    def testAphiaRecordsByName(self):
+
+        res = pyworms.aphiaRecordsByName("Abra alba")
+        self.assertIsNotNone(res)
+
+        res = pyworms.aphiaRecordsByName("xxxxxxxxx")
+        self.assertIsNone(res)
+
     def testCache(self):
         pyworms.aphiaRecordByAphiaID.cache_clear()
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
