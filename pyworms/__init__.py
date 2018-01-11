@@ -1,47 +1,60 @@
 # -*- coding: utf-8 -*-
-import logging
+import requests
+from .utils import *
+try:
+    from functools import lru_cache
+except ImportError:
+    from backports.functools_lru_cache import lru_cache
 
-class ISODateParser(object):
+@lru_cache(maxsize=200)
+def aphiaRecordByAphiaID(id):
+    try:
+        val = int(id)
+    except ValueError:
+        print("id should be an integer")
+    url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
+    r = requests.get(url)
+    if r.status_code == 204:
+        return None
+    elif r.status_code == 200:
+        return r.json()
+    else:
+        raise Exception()
 
-    def __init__(self, input):
-        self._logger = logging.getLogger(__name__)
+def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
-    def aphiaAttributeKeysByID(self): pass
+def aphiaAttributesByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaAttributesByAphiaID(self): pass
+def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
 
-    def aphiaAttributeValuesByCategoryID(self): pass
+def aphiaIDsByAttributeKeyID(): raise Exception("Method not implemented")
 
-    def aphiaIDsByAttributeKeyID(self): pass
+def aphiaDistributionsByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaDistributionsByAphiaID(self): pass
+def aphiaExternalIDByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaExternalIDByAphiaID(self): pass
+def aphiaRecordByExternalID(): raise Exception("Method not implemented")
 
-    def aphiaRecordByExternalID(self): pass
+def aphiaSourcesByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaSourcesByAphiaID(self): pass
+def aphiaChildrenByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaChildrenByAphiaID(self): pass
+def aphiaClassificationByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaClassificationByAphiaID(self): pass
+def aphiaIDByName(): raise Exception("Method not implemented")
 
-    def aphiaIDByName(self): pass
+def aphiaNameByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaNameByAphiaID(self): pass
+def aphiaRecordsByDate(): raise Exception("Method not implemented")
 
-    def aphiaRecordByAphiaID(self): pass
+def aphiaRecordsByMatchNames(): raise Exception("Method not implemented")
 
-    def aphiaRecordsByDate(self): pass
+def aphiaRecordsByName(): raise Exception("Method not implemented")
 
-    def aphiaRecordsByMatchNames(self): pass
+def aphiaRecordsByNames(): raise Exception("Method not implemented")
 
-    def aphiaRecordsByName(self): pass
+def aphiaSynonymsByAphiaID(): raise Exception("Method not implemented")
 
-    def aphiaRecordsByNames(self): pass
+def aphiaRecordsByVernacular(): raise Exception("Method not implemented")
 
-    def aphiaSynonymsByAphiaID(self): pass
-
-    def aphiaRecordsByVernacular(self): pass
-
-    def aphiaVernacularsByAphiaID(self): pass
+def aphiaVernacularsByAphiaID(): raise Exception("Method not implemented")
