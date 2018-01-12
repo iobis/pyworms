@@ -10,7 +10,7 @@ except ImportError:
 def aphiaRecordByAphiaID(id):
     try:
         val = int(id)
-    except ValueError:
+    except:
         print("id should be an integer")
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
     r = requests.get(url)
