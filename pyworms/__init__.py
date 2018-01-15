@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import requests
 from .utils import wormsURL, parseLSID, validateAphiaID, doGet
 try:
     from functools import lru_cache
