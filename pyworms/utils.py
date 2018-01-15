@@ -1,4 +1,5 @@
 import re
+import requests
 
 def wormsURL():
     return "http://www.marinespecies.org/rest/"
@@ -18,3 +19,12 @@ def validateAphiaID(id):
         int(id)
     except:
         print("id should be an integer")
+
+def doGet(url):
+    r = requests.get(url)
+    if r.status_code == 204:
+        return None
+    elif r.status_code == 200:
+        return r.json()
+    else:
+        raise Exception()

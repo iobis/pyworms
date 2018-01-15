@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-from .utils import wormsURL, parseLSID, validateAphiaID
+from .utils import wormsURL, parseLSID, validateAphiaID, doGet
 try:
     from functools import lru_cache
 except ImportError:
@@ -10,36 +10,18 @@ except ImportError:
 def aphiaRecordByAphiaID(id):
     validateAphiaID(id)
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
-    r = requests.get(url)
-    if r.status_code == 204:
-        return None
-    elif r.status_code == 200:
-        return r.json()
-    else:
-        raise Exception()
+    return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaRecordsByName(name, like=True, marine_only=True):
     url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
-    r = requests.get(url)
-    if r.status_code == 204:
-        return None
-    elif r.status_code == 200:
-        return r.json()
-    else:
-        raise Exception()
+    return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaDistributionsByAphiaID(id):
     validateAphiaID(id)
     url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
-    r = requests.get(url)
-    if r.status_code == 204:
-        return None
-    elif r.status_code == 200:
-        return r.json()
-    else:
-        raise Exception()
+    return doGet(url)
 
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
