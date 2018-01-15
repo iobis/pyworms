@@ -23,9 +23,13 @@ def aphiaDistributionsByAphiaID(id):
     url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
     return doGet(url)
 
-def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
+@lru_cache(maxsize=200)
+def aphiaAttributesByAphiaID(id):
+    validateAphiaID(id)
+    url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
+    return doGet(url)
 
-def aphiaAttributesByAphiaID(): raise Exception("Method not implemented")
+def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
 

@@ -8,23 +8,33 @@ import pyworms
 class Test(unittest.TestCase):
 
     def setUp(self):
+        self.abraAlbaID = 141433
+        self.invalidID = 9999999
         logging.disable(logging.CRITICAL)
 
     def testAphiaRecordByAphiaID(self):
-        res = pyworms.aphiaRecordByAphiaID(9999999)
+        res = pyworms.aphiaRecordByAphiaID(self.invalidID)
         self.assertIsNone(res)
-        res = pyworms.aphiaRecordByAphiaID(123456)
+        res = pyworms.aphiaRecordByAphiaID(self.abraAlbaID)
         self.assertIsNotNone(res)
         with self.assertRaises(Exception):
             pyworms.aphiaRecordByAphiaID("abcd")
 
     def testAphiaDistributionsByAphiaID(self):
-        res = pyworms.aphiaDistributionsByAphiaID(9999999)
+        res = pyworms.aphiaDistributionsByAphiaID(self.invalidID)
         self.assertIsNone(res)
-        res = pyworms.aphiaDistributionsByAphiaID(141433)
+        res = pyworms.aphiaDistributionsByAphiaID(self.abraAlbaID)
         self.assertIsNotNone(res)
         with self.assertRaises(Exception):
             pyworms.aphiaDistributionsByAphiaID("abcd")
+
+    def testAphiaAttributesByAphiaID(self):
+        res = pyworms.aphiaAttributesByAphiaID(self.invalidID)
+        self.assertIsNone(res)
+        res = pyworms.aphiaAttributesByAphiaID(self.abraAlbaID)
+        self.assertIsNotNone(res)
+        with self.assertRaises(Exception):
+            pyworms.aphiaAttributesByAphiaID("abcd")
 
     def testAphiaRecordsByName(self):
         res = pyworms.aphiaRecordsByName("Abra alba")
