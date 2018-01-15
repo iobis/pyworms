@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests
-from .utils import wormsURL, parseLSID
+from .utils import wormsURL, parseLSID, validateAphiaID
 try:
     from functools import lru_cache
 except ImportError:
@@ -8,10 +8,7 @@ except ImportError:
 
 @lru_cache(maxsize=200)
 def aphiaRecordByAphiaID(id):
-    try:
-        val = int(id)
-    except:
-        print("id should be an integer")
+    validateAphiaID(id)
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
     r = requests.get(url)
     if r.status_code == 204:
@@ -32,6 +29,18 @@ def aphiaRecordsByName(name, like=True, marine_only=True):
     else:
         raise Exception()
 
+@lru_cache(maxsize=200)
+def aphiaDistributionsByAphiaID(id):
+    validateAphiaID(id)
+    url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
+    r = requests.get(url)
+    if r.status_code == 204:
+        return None
+    elif r.status_code == 200:
+        return r.json()
+    else:
+        raise Exception()
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributesByAphiaID(): raise Exception("Method not implemented")
@@ -39,8 +48,6 @@ def aphiaAttributesByAphiaID(): raise Exception("Method not implemented")
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
 
 def aphiaIDsByAttributeKeyID(): raise Exception("Method not implemented")
-
-def aphiaDistributionsByAphiaID(): raise Exception("Method not implemented")
 
 def aphiaExternalIDByAphiaID(): raise Exception("Method not implemented")
 

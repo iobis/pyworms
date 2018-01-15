@@ -12,3 +12,9 @@ def parseLSID(input):
 
 def renderBool(b):
     return "true" if b else "false"
+
+def validateAphiaID(id):
+    try:
+        int(id)
+    except:
+        print("id should be an integer")
