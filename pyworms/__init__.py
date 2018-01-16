@@ -7,27 +7,45 @@ except ImportError:
 
 @lru_cache(maxsize=200)
 def aphiaRecordByAphiaID(id):
-    """Returns the Aphia record for an AphiaID."""
+    """Returns the Aphia record for an AphiaID.
+
+    :param id: AphiaID
+    :returns: Aphia record, None if not found.
+    """
     validateAphiaID(id)
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaRecordsByName(name, like=True, marine_only=True):
-    """Returns the Aphia records for a name."""
+    """Returns the Aphia records for a name.
+
+    :param id: AphiaID
+    :param like: SQL like query with % wildcard after input
+    :param marine_only: Limit to marine taxa
+    :returns: Aphia records.
+    """
     url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaDistributionsByAphiaID(id):
-    """Returns the Aphia distributions for an AphiaID."""
+    """Returns the Aphia distributions for an AphiaID.
+
+    :param id: AphiaID
+    :returns: Aphia distributions.
+    """
     validateAphiaID(id)
     url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaAttributesByAphiaID(id):
-    """Returns the Aphia attributes for an AphiaID."""
+    """Returns the Aphia attributes for an AphiaID.
+
+    :param id: AphiaID
+    :returns: Aphia attributes.
+    """
     validateAphiaID(id)
     url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
     return doGet(url)
