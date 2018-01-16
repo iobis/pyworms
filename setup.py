@@ -6,5 +6,6 @@ setup(
     author="Pieter Provoost",
     author_email="pieterprovoost@gmail.com",
     version="0.1.1",
-    packages=["pyworms"]
+    packages=["pyworms"],
+    install_requires=["backports.functools_lru_cache"]
 )
