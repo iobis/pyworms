@@ -7,23 +7,27 @@ except ImportError:
 
 @lru_cache(maxsize=200)
 def aphiaRecordByAphiaID(id):
+    """Returns the Aphia record for an AphiaID."""
     validateAphiaID(id)
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaRecordsByName(name, like=True, marine_only=True):
+    """Returns the Aphia records for a name."""
     url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaDistributionsByAphiaID(id):
+    """Returns the Aphia distributions for an AphiaID."""
     validateAphiaID(id)
     url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
     return doGet(url)
 
 @lru_cache(maxsize=200)
 def aphiaAttributesByAphiaID(id):
+    """Returns the Aphia attributes for an AphiaID."""
     validateAphiaID(id)
     url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
     return doGet(url)
