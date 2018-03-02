@@ -9,32 +9,33 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         self.abraAlbaID = 141433
-        self.invalidID = 9999999
+        self.nonExistingID = 9999999
+        self.invalidID = "abcde"
         logging.disable(logging.CRITICAL)
 
     def testAphiaRecordByAphiaID(self):
-        res = pyworms.aphiaRecordByAphiaID(self.invalidID)
+        res = pyworms.aphiaRecordByAphiaID(self.nonExistingID)
         self.assertIsNone(res)
         res = pyworms.aphiaRecordByAphiaID(self.abraAlbaID)
         self.assertIsNotNone(res)
-        with self.assertRaises(Exception):
-            pyworms.aphiaRecordByAphiaID("abcd")
+        with self.assertRaises(ValueError):
+            pyworms.aphiaRecordByAphiaID(self.invalidID)
 
     def testAphiaDistributionsByAphiaID(self):
-        res = pyworms.aphiaDistributionsByAphiaID(self.invalidID)
+        res = pyworms.aphiaDistributionsByAphiaID(self.nonExistingID)
         self.assertIsNone(res)
         res = pyworms.aphiaDistributionsByAphiaID(self.abraAlbaID)
         self.assertIsNotNone(res)
-        with self.assertRaises(Exception):
-            pyworms.aphiaDistributionsByAphiaID("abcd")
+        with self.assertRaises(ValueError):
+            pyworms.aphiaDistributionsByAphiaID(self.invalidID)
 
     def testAphiaAttributesByAphiaID(self):
-        res = pyworms.aphiaAttributesByAphiaID(self.invalidID)
+        res = pyworms.aphiaAttributesByAphiaID(self.nonExistingID)
         self.assertIsNone(res)
         res = pyworms.aphiaAttributesByAphiaID(self.abraAlbaID)
         self.assertIsNotNone(res)
-        with self.assertRaises(Exception):
-            pyworms.aphiaAttributesByAphiaID("abcd")
+        with self.assertRaises(ValueError):
+            pyworms.aphiaAttributesByAphiaID(self.invalidID)
 
     def testAphiaRecordsByName(self):
         res = pyworms.aphiaRecordsByName("Abra alba")

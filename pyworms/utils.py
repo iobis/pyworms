@@ -19,7 +19,7 @@ def validateAphiaID(id):
     try:
         int(id)
     except:
-        print("id should be an integer")
+        raise ValueError("id should be an integer")
 
 def doGet(url):
     attempts = 0
