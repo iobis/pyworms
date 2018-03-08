@@ -43,6 +43,19 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByName("xxxxxxxxx")
         self.assertIsNone(res)
 
+    def testAphiaClassificationByAphiaID(self):
+        res = pyworms.aphiaClassificationByAphiaID(self.abraAlbaID)
+        self.assertTrue("species" in res)
+        self.assertTrue("speciesid" in res)
+        self.assertTrue(res["speciesid"] is not None)
+        self.assertTrue("kingdom" in res)
+        self.assertTrue("kingdomid" in res)
+        self.assertTrue(res["kingdomid"] is not None)
+        with self.assertRaises(ValueError):
+            pyworms.aphiaClassificationByAphiaID(self.invalidID)
+        res = pyworms.aphiaClassificationByAphiaID(self.nonExistingID)
+        self.assertIsNone(res)
+
     def testCache(self):
         pyworms.aphiaRecordByAphiaID.cache_clear()
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)

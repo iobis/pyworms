@@ -37,3 +37,14 @@ def doGet(url):
             time.sleep(3)
     raise Exception()
 
+def flatten(classification, result=None):
+    result = {} if result is None else result
+    if classification is not None:
+        rank = classification["rank"].lower()
+        result[rank] = classification["scientificname"]
+        result[rank + "id"] = classification["AphiaID"]
+        if "child" in classification:
+            flatten(classification["child"], result)
+        return result
+    else:
+        return None

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .utils import wormsURL, parseLSID, validateAphiaID, doGet
+from .utils import wormsURL, parseLSID, validateAphiaID, doGet, flatten
 try:
     from functools import lru_cache
 except ImportError:
@@ -50,6 +50,13 @@ def aphiaAttributesByAphiaID(id):
     url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
     return doGet(url)
 
+@lru_cache(maxsize=200)
+def aphiaClassificationByAphiaID(id):
+    validateAphiaID(id)
+    url = wormsURL() + "AphiaClassificationByAphiaID/" + str(id)
+    res = doGet(url)
+    return flatten(res)
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
@@ -63,8 +70,6 @@ def aphiaRecordByExternalID(): raise Exception("Method not implemented")
 def aphiaSourcesByAphiaID(): raise Exception("Method not implemented")
 
 def aphiaChildrenByAphiaID(): raise Exception("Method not implemented")
-
-def aphiaClassificationByAphiaID(): raise Exception("Method not implemented")
 
 def aphiaIDByName(): raise Exception("Method not implemented")
 
