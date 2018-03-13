@@ -23,7 +23,7 @@ def validateAphiaID(id):
 
 def doGet(url):
     attempts = 0
-    while attempts < 3:
+    while True:
         try:
             r = requests.get(url)
             if r.status_code == 204:
@@ -31,11 +31,12 @@ def doGet(url):
             elif r.status_code == 200:
                 return r.json()
             else:
-                raise Exception
-        except Exception:
+                raise Exception(url + " return status " + str(r.status_code))
+        except Exception as e:
             attempts = attempts + 1
+            if attempts > 3:
+                raise Exception(e)
             time.sleep(3)
-    raise Exception()
 
 def flatten(classification, result=None):
     result = {} if result is None else result
