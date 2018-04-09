@@ -5,7 +5,7 @@ try:
 except ImportError:
     from backports.functools_lru_cache import lru_cache
 
-@lru_cache(maxsize=200)
+@lru_cache(maxsize=2000)
 def aphiaRecordByAphiaID(id):
     """Returns the Aphia record for an AphiaID.
 
@@ -16,7 +16,7 @@ def aphiaRecordByAphiaID(id):
     url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
     return doGet(url)
 
-@lru_cache(maxsize=200)
+@lru_cache(maxsize=2000)
 def aphiaRecordsByName(name, like=True, marine_only=True):
     """Returns the Aphia records for a name.
 
@@ -28,7 +28,7 @@ def aphiaRecordsByName(name, like=True, marine_only=True):
     url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
     return doGet(url)
 
-@lru_cache(maxsize=200)
+@lru_cache(maxsize=2000)
 def aphiaDistributionsByAphiaID(id):
     """Returns the Aphia distributions for an AphiaID.
 
@@ -39,7 +39,7 @@ def aphiaDistributionsByAphiaID(id):
     url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
     return doGet(url)
 
-@lru_cache(maxsize=200)
+@lru_cache(maxsize=2000)
 def aphiaAttributesByAphiaID(id):
     """Returns the Aphia attributes for an AphiaID.
 
@@ -50,7 +50,7 @@ def aphiaAttributesByAphiaID(id):
     url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
     return doGet(url)
 
-@lru_cache(maxsize=200)
+@lru_cache(maxsize=2000)
 def aphiaClassificationByAphiaID(id):
     validateAphiaID(id)
     url = wormsURL() + "AphiaClassificationByAphiaID/" + str(id)

@@ -26,7 +26,7 @@ def doGet(url):
     while True:
         try:
             r = requests.get(url)
-            if r.status_code == 204:
+            if r.status_code == 204 or r.status_code == 400:
                 return None
             elif r.status_code == 200:
                 return r.json()

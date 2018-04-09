@@ -14,6 +14,8 @@ class Test(unittest.TestCase):
         logging.disable(logging.CRITICAL)
 
     def testAphiaRecordByAphiaID(self):
+        res = pyworms.aphiaRecordByAphiaID(0)
+        self.assertIsNone(res)
         res = pyworms.aphiaRecordByAphiaID(self.nonExistingID)
         self.assertIsNone(res)
         res = pyworms.aphiaRecordByAphiaID(self.abraAlbaID)
@@ -61,9 +63,3 @@ class Test(unittest.TestCase):
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
         pyworms.aphiaRecordByAphiaID(123459)
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
-
-    def testParseLSID(self):
-        id = pyworms.parseLSID("urn:lsid:marinespecies.org:taxname:134546")
-        self.assertEquals(id, "134546")
-        id = pyworms.parseLSID("134546")
-        self.assertIsNone(id)
