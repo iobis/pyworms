@@ -63,6 +63,7 @@ def _aphiaRecordsByMatchNamesCacheable(q):
     return doGet(url)
 
 def aphiaRecordsByMatchNames(names):
+    names = [names] if not isinstance(names, (list,)) else names
     q = "&".join(["scientificnames[]=" + name for name in names])
     return _aphiaRecordsByMatchNamesCacheable(q)
 
