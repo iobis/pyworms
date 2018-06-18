@@ -63,3 +63,12 @@ class Test(unittest.TestCase):
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
         pyworms.aphiaRecordByAphiaID(123459)
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
+
+    def testAphiaRecordsByMatchNames(self):
+        res = pyworms.aphiaRecordsByMatchNames(["Abra albo", "Lanice conchilega"])
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), 2)
+        self.assertEquals(len(res[0]), 1)
+        self.assertEquals(len(res[1]), 1)
+        self.assertEquals(res[0][0]["match_type"], "phonetic")
+        self.assertEquals(res[1][0]["match_type"], "exact")

@@ -57,6 +57,15 @@ def aphiaClassificationByAphiaID(id):
     res = doGet(url)
     return flatten(res)
 
+@lru_cache(maxsize=2000)
+def _aphiaRecordsByMatchNamesCacheable(q):
+    url = wormsURL() + "AphiaRecordsByMatchNames?" + q
+    return doGet(url)
+
+def aphiaRecordsByMatchNames(names):
+    q = "&".join(["scientificnames[]=" + name for name in names])
+    return _aphiaRecordsByMatchNamesCacheable(q)
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
@@ -76,8 +85,6 @@ def aphiaIDByName(): raise Exception("Method not implemented")
 def aphiaNameByAphiaID(): raise Exception("Method not implemented")
 
 def aphiaRecordsByDate(): raise Exception("Method not implemented")
-
-def aphiaRecordsByMatchNames(): raise Exception("Method not implemented")
 
 def aphiaRecordsByNames(): raise Exception("Method not implemented")
 
