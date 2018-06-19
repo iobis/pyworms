@@ -65,7 +65,11 @@ def _aphiaRecordsByMatchNamesCacheable(q):
 def aphiaRecordsByMatchNames(names):
     names = [names] if not isinstance(names, (list,)) else names
     q = "&".join(["scientificnames[]=" + name for name in names])
-    return _aphiaRecordsByMatchNamesCacheable(q)
+    result = _aphiaRecordsByMatchNamesCacheable(q)
+    if result is None:
+        return [[]] * len(names)
+    else:
+        return result
 
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 

@@ -75,3 +75,8 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByMatchNames("Abra albo")
         self.assertIsNotNone(res)
         self.assertEquals(len(res), 1)
+
+    def testAphiaRecordsByMatchNamesNoMatches(self):
+        res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), 2)
