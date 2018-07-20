@@ -6,3 +6,4 @@
 **/pyworms.egg-info
 **/_build
 **/_static
+**/dev.py

@@ -44,7 +44,9 @@ def flatten(classification, result=None):
         rank = classification["rank"].lower()
         result[rank] = classification["scientificname"]
         result[rank + "id"] = classification["AphiaID"]
-        if "child" in classification:
+        if "child" in classification and classification["child"] is not None:
+            result["parentNameUsage"] = classification["scientificname"]
+            result["parentNameUsageID"] = classification["AphiaID"]
             flatten(classification["child"], result)
         return result
     else:
