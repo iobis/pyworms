@@ -71,6 +71,15 @@ def aphiaRecordsByMatchNames(names):
     else:
         return result
 
+def cache_clear():
+    aphiaRecordByAphiaID.cache_clear()
+    aphiaRecordsByName.cache_clear()
+    aphiaDistributionsByAphiaID.cache_clear()
+    aphiaDistributionsByAphiaID.cache_clear()
+    aphiaAttributesByAphiaID.cache_clear()
+    aphiaClassificationByAphiaID.cache_clear()
+    _aphiaRecordsByMatchNamesCacheable.cache_clear()
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
 
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
