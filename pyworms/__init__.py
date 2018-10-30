@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .utils import wormsURL, parseLSID, validateAphiaID, doGet, flatten
+from .utils import wormsURL, parseLSID, validateAphiaID, doGet, doGetPaginated, flatten
 try:
     from functools import lru_cache
 except ImportError:
@@ -52,6 +52,11 @@ def aphiaAttributesByAphiaID(id):
 
 @lru_cache(maxsize=2000)
 def aphiaClassificationByAphiaID(id):
+    """Returns the Aphia classification for an AphiaID.
+
+    :param id: AphiaID
+    :returns: Aphia classification.
+    """
     validateAphiaID(id)
     url = wormsURL() + "AphiaClassificationByAphiaID/" + str(id)
     res = doGet(url)
@@ -63,6 +68,11 @@ def _aphiaRecordsByMatchNamesCacheable(q):
     return doGet(url)
 
 def aphiaRecordsByMatchNames(names):
+    """Returns Aphia matches for a set of names.
+
+    :param names: Names
+    :returns: Aphia matches.
+    """
     names = [names] if not isinstance(names, (list,)) else names
     q = "&".join(["scientificnames[]=" + name for name in names])
     result = _aphiaRecordsByMatchNamesCacheable(q)
@@ -70,6 +80,17 @@ def aphiaRecordsByMatchNames(names):
         return [[]] * len(names)
     else:
         return result
+
+def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
+    """Returns Aphia records by change date.
+
+    :param start_date: Start date
+    :param end_date: End date
+    :param marine_only: Marine only
+    :returns: Aphia records.
+    """
+    url = wormsURL() + "AphiaRecordsByDate?marine_only=" + utils.renderBool(marine_only) + "&startdate=" + utils.renderDate(start_date) + "&enddate=" + utils.renderDate(end_date) + "&offset=##"
+    return doGetPaginated(url)
 
 def cache_clear():
     aphiaRecordByAphiaID.cache_clear()
@@ -97,8 +118,6 @@ def aphiaChildrenByAphiaID(): raise Exception("Method not implemented")
 def aphiaIDByName(): raise Exception("Method not implemented")
 
 def aphiaNameByAphiaID(): raise Exception("Method not implemented")
-
-def aphiaRecordsByDate(): raise Exception("Method not implemented")
 
 def aphiaRecordsByNames(): raise Exception("Method not implemented")
 

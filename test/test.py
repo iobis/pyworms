@@ -4,6 +4,7 @@ import os
 import logging
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 import pyworms
+import datetime
 
 class Test(unittest.TestCase):
 
@@ -80,3 +81,9 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])
         self.assertIsNotNone(res)
         self.assertEquals(len(res), 2)
+
+    def testAphiaRecordsByDate(self):
+        res = pyworms.aphiaRecordsByDate(datetime.date.today() - datetime.timedelta(days=2))
+        self.assertTrue(len(res) > 0)
+        res = pyworms.aphiaRecordsByDate(datetime.date.today() + datetime.timedelta(days=1))
+        self.assertTrue(res is None)

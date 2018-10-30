@@ -1,6 +1,7 @@
 import re
 import requests
 import time
+import datetime
 
 def wormsURL():
     return "http://www.marinespecies.org/rest/"
@@ -15,11 +16,33 @@ def parseLSID(input):
 def renderBool(b):
     return "true" if b else "false"
 
+def renderDate(d):
+    if d is None:
+        return ""
+    elif isinstance(d, datetime.date) or isinstance(d, datetime.datetime):
+        return d.isoformat()
+    elif isinstance(d, basestring):
+        return d
+    else:
+        raise ValueError("Is not a date.")
+
 def validateAphiaID(id):
     try:
         int(id)
     except:
         raise ValueError("id should be an integer")
+
+def doGetPaginated(url):
+    offset = 1
+    results = []
+    while True:
+        final_url = url.replace("##", str(offset))
+        res = doGet(final_url)
+        if res is None or len(res) == 0:
+            return None if len(results) == 0 else results
+        else:
+            results = results + res
+            offset = offset + 50
 
 def doGet(url):
     attempts = 0
