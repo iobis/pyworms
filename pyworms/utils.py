@@ -57,7 +57,7 @@ def doGet(url):
                 raise Exception(url + " return status " + str(r.status_code))
         except Exception as e:
             attempts = attempts + 1
-            if attempts > 3:
+            if attempts > 10:
                 raise Exception(e)
             time.sleep(3)
 
