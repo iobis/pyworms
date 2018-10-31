@@ -83,7 +83,7 @@ class Test(unittest.TestCase):
         self.assertEquals(len(res), 2)
 
     def testAphiaRecordsByDate(self):
-        res = pyworms.aphiaRecordsByDate(datetime.date.today() - datetime.timedelta(days=2))
+        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() - datetime.timedelta(hours=5))
         self.assertTrue(len(res) > 0)
-        res = pyworms.aphiaRecordsByDate(datetime.date.today() + datetime.timedelta(days=1))
+        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() + datetime.timedelta(hours=1))
         self.assertTrue(res is None)

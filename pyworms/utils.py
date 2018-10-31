@@ -48,7 +48,7 @@ def doGet(url):
     attempts = 0
     while True:
         try:
-            r = requests.get(url)
+            r = requests.get(url, timeout=5)
             if r.status_code == 204 or r.status_code == 400:
                 return None
             elif r.status_code == 200:
@@ -59,7 +59,7 @@ def doGet(url):
             attempts = attempts + 1
             if attempts > 10:
                 raise Exception(e)
-            time.sleep(3)
+            time.sleep(5)
 
 def flatten(classification, result=None):
     result = {} if result is None else result
