@@ -2,6 +2,7 @@ import re
 import requests
 import time
 import datetime
+import os
 
 def wormsURL():
     return "http://www.marinespecies.org/rest/"
@@ -45,10 +46,12 @@ def doGetPaginated(url):
             offset = offset + 50
 
 def doGet(url):
+    if os.environ.get("PYWORMS_VERBOSE") is not None and os.environ.get("PYWORMS_VERBOSE") == "1":
+        print url
     attempts = 0
     while True:
         try:
-            r = requests.get(url, timeout=5)
+            r = requests.get(url, timeout=30)
             if r.status_code == 204 or r.status_code == 400:
                 return None
             elif r.status_code == 200:

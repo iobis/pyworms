@@ -67,6 +67,11 @@ def _aphiaRecordsByMatchNamesCacheable(q):
     url = wormsURL() + "AphiaRecordsByMatchNames?" + q
     return doGet(url)
 
+def batch(iterable):
+    l = len(iterable)
+    for ndx in range(0, l, 50):
+        yield iterable[ndx:min(ndx + 50, l)]
+
 def aphiaRecordsByMatchNames(names):
     """Returns Aphia matches for a set of names.
 
@@ -74,12 +79,16 @@ def aphiaRecordsByMatchNames(names):
     :returns: Aphia matches.
     """
     names = [names] if not isinstance(names, (list,)) else names
-    q = "&".join(["scientificnames[]=" + name for name in names])
-    result = _aphiaRecordsByMatchNamesCacheable(q)
-    if result is None:
-        return [[]] * len(names)
-    else:
-        return result
+    results = []
+
+    for n in batch(names):
+        q = "&".join(["scientificnames[]=" + name for name in n])
+        res = _aphiaRecordsByMatchNamesCacheable(q)
+        if res is None:
+            results = results + [[]] * len(names)
+        else:
+            results = results + res
+    return results
 
 def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
     """Returns Aphia records by change date.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 import sys
 import os
@@ -76,6 +77,72 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByMatchNames("Abra albo")
         self.assertIsNotNone(res)
         self.assertEquals(len(res), 1)
+        names = ["Barbatia tenella (Reeve, 1844)",
+                 "Mitra kantori Poppe, Tagaro & Salisbury, 2009",
+                 "Diminovula culmen (Cate, 1973)",
+                 "Hastulopsis turrita (E. A. Smith, 1873)",
+                 "Purpurcapsula bayeri (Fehse, 1998)",
+                 "Hebra corticata (A. Adams, 1852)",
+                 "Tridentarius dentatus (Linnaeus, 1758)",
+                 "Terebra textilis Hinds, 1844",
+                 "Psammobiidae",
+                 "Monstrotyphis singularis Houart, 2002",
+                 "Morula nodulifera (Menke, 1829)",
+                 "Lithophaga corrugata (Philippi, 1846)",
+                 "Turritellidae",
+                 "Conus planorbis Born, 1778",
+                 "Favartia Jousseaume, 1880",
+                 "Conus exiguus Lamarck, 1810",
+                 "Pictorium versicolor Strong & Bouchet, 2013",
+                 "Imbricaria Schumacher, 1817",
+                 "Liotiidae",
+                 "Contradusta bregeriana (Crosse, 1868)",
+                 "Anomiidae",
+                 "Monetaria moneta (Linnaeus, 1758)",
+                 "Vasticardium elongatum coralense (Vidal, 1993)",
+                 "Euprotomus vomer (Röding, 1798)",
+                 "Duplicaria teramachii Burch, 1965",
+                 "Coralliophila bulbiformis (Conrad, 1837)",
+                 "Maculotriton serriale (Deshayes, 1834)",
+                 "Hastula strigilata (Linnaeus, 1758)",
+                 "Architectonicidae",
+                 "Oxymeris areolata (Link, 1807)",
+                 "Schwartziella ephamilla (Watson, 1886)",
+                 "Cadulus Philippi, 1844",
+                 "Conus lividus Hwass in Bruguiére, 1792",
+                 "Mitra aurantia aurantia",
+                 "Trochidae",
+                 "Jujubinus Monterosato, 1884",
+                 "Distorsio anus (Linnaeus, 1758)",
+                 "Nassarius fraudulentus (Marrat, 1877)",
+                 "Cystiscus punctatus Boyer, 2003",
+                 "Labiostrombus epidromis (Linnaeus, 1758)",
+                 "Barbatia tenella (Reeve, 1844)",
+                 "Mitra kantori Poppe, Tagaro & Salisbury, 2009",
+                 "Diminovula culmen (Cate, 1973)",
+                 "Hastulopsis turrita (E. A. Smith, 1873)",
+                 "Purpurcapsula bayeri (Fehse, 1998)",
+                 "Hebra corticata (A. Adams, 1852)",
+                 "Tridentarius dentatus (Linnaeus, 1758)",
+                 "Terebra textilis Hinds, 1844",
+                 "Psammobiidae",
+                 "Monstrotyphis singularis Houart, 2002",
+                 "Morula nodulifera (Menke, 1829)",
+                 "Lithophaga corrugata (Philippi, 1846)",
+                 "Turritellidae",
+                 "Conus planorbis Born, 1778",
+                 "Favartia Jousseaume, 1880",
+                 "Conus exiguus Lamarck, 1810",
+                 "Pictorium versicolor Strong & Bouchet, 2013",
+                 "Imbricaria Schumacher, 1817",
+                 "Liotiidae",
+                 "Contradusta bregeriana (Crosse, 1868)",
+                 "Anomiidae",
+                 "Monetaria moneta (Linnaeus, 1758)",
+                 "Vasticardium elongatum coralense (Vidal, 1993)"]
+        res = pyworms.aphiaRecordsByMatchNames(names)
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), len(names))
 
     def testAphiaRecordsByMatchNamesNoMatches(self):
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])
