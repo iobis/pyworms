@@ -143,6 +143,13 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByMatchNames(names)
         self.assertIsNotNone(res)
         self.assertEquals(len(res), len(names))
+        names = ["Barbatia tenella (Reeve, 1844)",
+                 None,
+                 "Mitra kantori Poppe, Tagaro & Salisbury, 2009",
+                 "Diminovula culmen (Cate, 1973)"]
+        res = pyworms.aphiaRecordsByMatchNames(names)
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), 4)
 
     def testAphiaRecordsByMatchNamesNoMatches(self):
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])

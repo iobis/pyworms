@@ -79,6 +79,7 @@ def aphiaRecordsByMatchNames(names):
     :returns: Aphia matches.
     """
     names = [names] if not isinstance(names, (list,)) else names
+    names = ["" if n is None else n for n in names]
     results = []
 
     for n in batch(names):
