@@ -51,7 +51,7 @@ def doGet(url):
     attempts = 0
     while True:
         try:
-            r = requests.get(url, timeout=30)
+            r = requests.get(url, timeout=300)
             if r.status_code == 204 or r.status_code == 400:
                 return None
             elif r.status_code == 200:
