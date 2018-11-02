@@ -155,6 +155,9 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])
         self.assertIsNotNone(res)
         self.assertEquals(len(res), 2)
+        res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx"] * 60)
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), 60)
 
     def testAphiaRecordsByDate(self):
         res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() - datetime.timedelta(hours=5))

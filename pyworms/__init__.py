@@ -86,7 +86,7 @@ def aphiaRecordsByMatchNames(names):
         q = "&".join(["scientificnames[]=" + name for name in n])
         res = _aphiaRecordsByMatchNamesCacheable(q)
         if res is None:
-            results = results + [[]] * len(names)
+            results = results + [[]] * len(n)
         else:
             results = results + res
     return results
