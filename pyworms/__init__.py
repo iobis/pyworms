@@ -72,10 +72,11 @@ def batch(iterable):
     for ndx in range(0, l, 50):
         yield iterable[ndx:min(ndx + 50, l)]
 
-def aphiaRecordsByMatchNames(names):
+def aphiaRecordsByMatchNames(names, marine_only=True):
     """Returns Aphia matches for a set of names.
 
     :param names: Names
+    :param marine_only: Marine only
     :returns: Aphia matches.
     """
     names = [names] if not isinstance(names, (list,)) else names
@@ -84,6 +85,7 @@ def aphiaRecordsByMatchNames(names):
 
     for n in batch(names):
         q = "&".join(["scientificnames[]=" + name for name in n])
+        q = q + "&marine_only=" + utils.renderBool(marine_only)
         res = _aphiaRecordsByMatchNamesCacheable(q)
         if res is None:
             results = results + [[]] * len(n)

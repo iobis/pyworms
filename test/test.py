@@ -7,6 +7,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../"
 import pyworms
 import datetime
 
+os.environ["PYWORMS_VERBOSE"] = "1"
+
 class Test(unittest.TestCase):
 
     def setUp(self):
