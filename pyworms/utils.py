@@ -47,7 +47,7 @@ def doGetPaginated(url):
 
 def doGet(url):
     if os.environ.get("PYWORMS_VERBOSE") is not None and os.environ.get("PYWORMS_VERBOSE") == "1":
-        print url
+        print(url)
     attempts = 0
     while True:
         try:
