@@ -5,7 +5,7 @@ setup(
     description="Python client for the WoRMS REST service",
     author="Pieter Provoost",
     author_email="pieterprovoost@gmail.com",
-    version="0.2.1",
+    version="0.2.0",
     packages=["pyworms"],
     install_requires=["backports.functools_lru_cache", "requests"]
 )
