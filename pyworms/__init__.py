@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-from .utils import wormsURL, parseLSID, validateAphiaID, doGet, doGetPaginated, flatten
+from .utils import worms_url, parse_lsid, validate_aphia_id, do_get, do_get_paginated, flatten
 try:
     from functools import lru_cache
 except ImportError:
     from backports.functools_lru_cache import lru_cache
+
 
 @lru_cache(maxsize=2000)
 def aphiaRecordByAphiaID(id):
@@ -12,9 +12,10 @@ def aphiaRecordByAphiaID(id):
     :param id: AphiaID
     :returns: Aphia record, None if not found.
     """
-    validateAphiaID(id)
-    url = wormsURL() + "AphiaRecordByAphiaID/" + str(id)
-    return doGet(url)
+    validate_aphia_id(id)
+    url = worms_url() + "AphiaRecordByAphiaID/" + str(id)
+    return do_get(url)
+
 
 @lru_cache(maxsize=2000)
 def aphiaRecordsByName(name, like=True, marine_only=True):
@@ -25,8 +26,9 @@ def aphiaRecordsByName(name, like=True, marine_only=True):
     :param marine_only: Limit to marine taxa
     :returns: Aphia records.
     """
-    url = wormsURL() + "AphiaRecordsByName/" + name + "?like=" + utils.renderBool(like) + "&marine_only=" + utils.renderBool(marine_only)
-    return doGet(url)
+    url = worms_url() + "AphiaRecordsByName/" + name + "?like=" + utils.render_bool(like) + "&marine_only=" + utils.render_bool(marine_only)
+    return do_get(url)
+
 
 @lru_cache(maxsize=2000)
 def aphiaDistributionsByAphiaID(id):
@@ -35,9 +37,10 @@ def aphiaDistributionsByAphiaID(id):
     :param id: AphiaID
     :returns: Aphia distributions.
     """
-    validateAphiaID(id)
-    url = wormsURL() + "AphiaDistributionsByAphiaID/" + str(id)
-    return doGet(url)
+    validate_aphia_id(id)
+    url = worms_url() + "AphiaDistributionsByAphiaID/" + str(id)
+    return do_get(url)
+
 
 @lru_cache(maxsize=2000)
 def aphiaAttributesByAphiaID(id):
@@ -46,9 +49,10 @@ def aphiaAttributesByAphiaID(id):
     :param id: AphiaID
     :returns: Aphia attributes.
     """
-    validateAphiaID(id)
-    url = wormsURL() + "AphiaAttributesByAphiaID/" + str(id)
-    return doGet(url)
+    validate_aphia_id(id)
+    url = worms_url() + "AphiaAttributesByAphiaID/" + str(id)
+    return do_get(url)
+
 
 @lru_cache(maxsize=2000)
 def aphiaClassificationByAphiaID(id):
@@ -57,20 +61,30 @@ def aphiaClassificationByAphiaID(id):
     :param id: AphiaID
     :returns: Aphia classification.
     """
-    validateAphiaID(id)
-    url = wormsURL() + "AphiaClassificationByAphiaID/" + str(id)
-    res = doGet(url)
+    validate_aphia_id(id)
+    url = worms_url() + "AphiaClassificationByAphiaID/" + str(id)
+    res = do_get(url)
     return flatten(res)
+
+
+@lru_cache(maxsize=2000)
+def aphiaExternalIDByAphiaID(id, type):
+    """Returns an external identifier for an AphiaID.
+
+    :param id: AphiaID
+    :param type: One of algaebase, bold, dyntaxa, eol, fishbase, iucn, lsid, ncbi, tsn, gisd
+    :returns: Aphia classification.
+    """
+    validate_aphia_id(id)
+    url = worms_url() + "AphiaExternalIDByAphiaID/" + str(id) + "?type=" + type
+    return do_get(url)
+
 
 @lru_cache(maxsize=2000)
 def _aphiaRecordsByMatchNamesCacheable(q):
-    url = wormsURL() + "AphiaRecordsByMatchNames?" + q
-    return doGet(url)
+    url = worms_url() + "AphiaRecordsByMatchNames?" + q
+    return do_get(url)
 
-def batch(iterable):
-    l = len(iterable)
-    for ndx in range(0, l, 50):
-        yield iterable[ndx:min(ndx + 50, l)]
 
 def aphiaRecordsByMatchNames(names, marine_only=True):
     """Returns Aphia matches for a set of names.
@@ -85,13 +99,14 @@ def aphiaRecordsByMatchNames(names, marine_only=True):
 
     for n in batch(names):
         q = "&".join(["scientificnames[]=" + name for name in n])
-        q = q + "&marine_only=" + utils.renderBool(marine_only)
+        q = q + "&marine_only=" + utils.render_bool(marine_only)
         res = _aphiaRecordsByMatchNamesCacheable(q)
         if res is None:
             results = results + [[]] * len(n)
         else:
             results = results + res
     return results
+
 
 def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
     """Returns Aphia records by change date.
@@ -101,8 +116,15 @@ def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
     :param marine_only: Marine only
     :returns: Aphia records.
     """
-    url = wormsURL() + "AphiaRecordsByDate?marine_only=" + utils.renderBool(marine_only) + "&startdate=" + utils.renderDate(start_date) + "&enddate=" + utils.renderDate(end_date) + "&offset=##"
-    return doGetPaginated(url)
+    url = worms_url() + "AphiaRecordsByDate?marine_only=" + utils.render_bool(marine_only) + "&startdate=" + utils.render_date(start_date) + "&enddate=" + utils.render_date(end_date) + "&offset=##"
+    return do_get_paginated(url)
+
+
+def batch(iterable):
+    l = len(iterable)
+    for ndx in range(0, l, 50):
+        yield iterable[ndx:min(ndx + 50, l)]
+
 
 def cache_clear():
     aphiaRecordByAphiaID.cache_clear()
@@ -113,28 +135,38 @@ def cache_clear():
     aphiaClassificationByAphiaID.cache_clear()
     _aphiaRecordsByMatchNamesCacheable.cache_clear()
 
+
 def aphiaAttributeKeysByID(): raise Exception("Method not implemented")
+
 
 def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented")
 
+
 def aphiaIDsByAttributeKeyID(): raise Exception("Method not implemented")
 
-def aphiaExternalIDByAphiaID(): raise Exception("Method not implemented")
 
 def aphiaRecordByExternalID(): raise Exception("Method not implemented")
 
+
 def aphiaSourcesByAphiaID(): raise Exception("Method not implemented")
+
 
 def aphiaChildrenByAphiaID(): raise Exception("Method not implemented")
 
+
 def aphiaIDByName(): raise Exception("Method not implemented")
+
 
 def aphiaNameByAphiaID(): raise Exception("Method not implemented")
 
+
 def aphiaRecordsByNames(): raise Exception("Method not implemented")
+
 
 def aphiaSynonymsByAphiaID(): raise Exception("Method not implemented")
 
+
 def aphiaRecordsByVernacular(): raise Exception("Method not implemented")
+
 
 def aphiaVernacularsByAphiaID(): raise Exception("Method not implemented")

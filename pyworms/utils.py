@@ -4,48 +4,55 @@ import time
 import datetime
 import os
 
-def wormsURL():
+
+def worms_url():
     return "http://www.marinespecies.org/rest/"
 
-def parseLSID(input):
-    m = re.search("^urn:lsid:marinespecies.org:taxname:([0-9]+)$", input)
+
+def parse_lsid(s):
+    m = re.search("^urn:lsid:marinespecies.org:taxname:([0-9]+)$", s)
     if m:
         return m.group(1)
     else:
         return None
 
-def renderBool(b):
+
+def render_bool(b):
     return "true" if b else "false"
 
-def renderDate(d):
+
+def render_date(d):
     if d is None:
         return ""
     elif isinstance(d, datetime.date) or isinstance(d, datetime.datetime):
         return d.isoformat()
-    elif isinstance(d, basestring):
+    elif isinstance(d, str):
         return d
     else:
         raise ValueError("Is not a date.")
 
-def validateAphiaID(id):
+
+def validate_aphia_id(id):
     try:
         int(id)
     except:
         raise ValueError("id should be an integer")
 
-def doGetPaginated(url):
+
+def do_get_paginated(url):
     offset = 1
     results = []
     while True:
         final_url = url.replace("##", str(offset))
-        res = doGet(final_url)
+        res = do_get(final_url)
         if res is None or len(res) == 0:
             return None if len(results) == 0 else results
         else:
             results = results + res
             offset = offset + 50
 
-def doGet(url):
+
+def do_get(url):
     if os.environ.get("PYWORMS_VERBOSE") is not None and os.environ.get("PYWORMS_VERBOSE") == "1":
         print(url)
     attempts = 0
@@ -63,6 +70,7 @@ def doGet(url):
             if attempts > 10:
                 raise Exception(e)
             time.sleep(5)
+
 
 def flatten(classification, result=None):
     result = {} if result is None else result

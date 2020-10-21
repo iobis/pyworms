@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import unittest
 import sys
 import os
@@ -7,7 +6,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../"
 import pyworms
 import datetime
 
+
 os.environ["PYWORMS_VERBOSE"] = "1"
+
 
 class Test(unittest.TestCase):
 
@@ -162,7 +163,13 @@ class Test(unittest.TestCase):
         self.assertEquals(len(res), 60)
 
     def testAphiaRecordsByDate(self):
-        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() - datetime.timedelta(hours=5))
+        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() - datetime.timedelta(hours=10))
         self.assertTrue(len(res) > 0)
-        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() + datetime.timedelta(hours=1))
+        res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() + datetime.timedelta(hours=10))
+        print(res)
         self.assertTrue(res is None)
+
+    def testAphiaExternalIDByAphiaID(self):
+        res = pyworms.aphiaExternalIDByAphiaID(141433, "bold")
+        self.assertTrue(len(res) == 1)
+        self.assertTrue("642814" in res)
