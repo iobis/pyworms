@@ -120,6 +120,12 @@ def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
     return do_get_paginated(url)
 
 
+@lru_cache(maxsize=2000)
+def aphiaRecordByExternalID(id, type):
+    url = worms_url() + "AphiaRecordByExternalID/" + str(id) + "?type=" + type
+    return do_get(url)
+
+
 def batch(iterable):
     l = len(iterable)
     for ndx in range(0, l, 50):
@@ -129,6 +135,7 @@ def batch(iterable):
 def cache_clear():
     aphiaRecordByAphiaID.cache_clear()
     aphiaRecordsByName.cache_clear()
+    aphiaRecordByExternalID.cache_clear()
     aphiaDistributionsByAphiaID.cache_clear()
     aphiaDistributionsByAphiaID.cache_clear()
     aphiaAttributesByAphiaID.cache_clear()
@@ -143,9 +150,6 @@ def aphiaAttributeValuesByCategoryID(): raise Exception("Method not implemented"
 
 
 def aphiaIDsByAttributeKeyID(): raise Exception("Method not implemented")
-
-
-def aphiaRecordByExternalID(): raise Exception("Method not implemented")
 
 
 def aphiaSourcesByAphiaID(): raise Exception("Method not implemented")

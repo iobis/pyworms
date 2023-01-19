@@ -1,8 +1,6 @@
 import unittest
-import sys
 import os
 import logging
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
 import pyworms
 import datetime
 
@@ -16,7 +14,12 @@ class Test(unittest.TestCase):
         self.abraAlbaID = 141433
         self.nonExistingID = 9999999
         self.invalidID = "abcde"
+        self.ncbiID = 399303
         logging.disable(logging.CRITICAL)
+
+    def testAphiaRecordByExternalID(self):
+        res = pyworms.aphiaRecordByExternalID(self.ncbiID)
+        self.assertIsNotNone(res)
 
     def testAphiaRecordByAphiaID(self):
         res = pyworms.aphiaRecordByAphiaID(0)
@@ -68,6 +71,43 @@ class Test(unittest.TestCase):
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
         pyworms.aphiaRecordByAphiaID(123459)
         self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
+
+    def testAphiaRecordsByMatchNames2(self):
+        names = [
+            "14(25-33 part)",
+            "FWS 6050",
+            "FWS 8307",
+            "14(25-34)",
+            "N 69-4",
+            "FWS 8349",
+            "Jar no. D327",
+            "FWS 18955",
+            "FWS 8315",
+            "B",
+            "14 WD 28-3",
+            "FWS 18009",
+            "14(25-18)",
+            "FWSD 4137",
+            "FWS 8435",
+            "FWS 8834",
+            "FWS 19107",
+            "FWS 8643",
+            "74-12",
+            "LL04-131",
+            "74-15",
+            "14(25-11)",
+            "GPE 17",
+            "FWS 4088",
+            "FWS 8391",
+            "sample #101",
+            "32-1",
+            "14 WD 28-8",
+            "FWS 8540",
+            "FWS 8532 B"
+        ]
+        res = pyworms.aphiaRecordsByMatchNames(names)
+        self.assertIsNotNone(res)
+        self.assertEquals(len(res), len(names))
 
     def testAphiaRecordsByMatchNames(self):
         res = pyworms.aphiaRecordsByMatchNames(["Abra albo", "Lanice conchilega"])
@@ -173,3 +213,7 @@ class Test(unittest.TestCase):
         res = pyworms.aphiaExternalIDByAphiaID(141433, "bold")
         self.assertTrue(len(res) == 1)
         self.assertTrue("642814" in res)
+
+
+if __name__ == "__main__":
+    unittest.main()
