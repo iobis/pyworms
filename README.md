@@ -7,6 +7,10 @@ Python client for the World Register of Marine Species (WoRMS) REST service. For
 ```
 pip install git+git://github.com/iobis/pyworms.git
 ```
+OR
+```
+conda install -c conda-forge pyworms
+```
 
 ## Documentation
 
