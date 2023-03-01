@@ -122,6 +122,12 @@ def aphiaRecordsByDate(start_date, end_date=None, marine_only=True):
 
 @lru_cache(maxsize=2000)
 def aphiaRecordByExternalID(id, type):
+    """Returns an Aphia record for an external identifier.
+
+    :param id: AphiaID
+    :param type: One of algaebase, bold, dyntaxa, eol, fishbase, iucn, lsid, ncbi, tsn, gisd
+    :returns: Aphia record.
+    """
     url = worms_url() + "AphiaRecordByExternalID/" + str(id) + "?type=" + type
     return do_get(url)
 
