@@ -1,0 +1,38 @@
+{
+    "@context": [
+        "https://doi.org/10.5063/schema/codemeta-2.0",
+        "https://w3id.org/software-iodata",
+        "https://raw.githubusercontent.com/jantman/repostatus.org/master/badges/latest/ontology.jsonld",
+        "https://schema.org",
+        "https://w3id.org/software-types"
+    ],
+    "@type": "SoftwareSourceCode",
+    "author": [
+        {
+            "@type": "Person",
+            "email": "pieterprovoost@gmail.com",
+            "familyName": "Provoost",
+            "givenName": "Pieter"
+        }
+    ],
+    "description": "Python client for the WoRMS REST service",
+    "identifier": "pyworms",
+    "license": "http://spdx.org/licenses/BSD-3-Clause",
+    "name": "pyworms",
+    "runtimePlatform": "Python 3",
+    "softwareRequirements": [
+        {
+            "@type": "SoftwareApplication",
+            "identifier": "backports.functools-lru-cache",
+            "name": "backports.functools-lru-cache",
+            "runtimePlatform": "Python 3"
+        },
+        {
+            "@type": "SoftwareApplication",
+            "identifier": "requests",
+            "name": "requests",
+            "runtimePlatform": "Python 3"
+        }
+    ],
+    "version": "0.4.0"
+}
