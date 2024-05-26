@@ -14,4 +14,4 @@ conda install -c conda-forge pyworms
 
 ## Documentation
 
-See documentation at http://pyworms.readthedocs.io/en/latest/.
+See documentation at https://pyworms.readthedocs.io/en/latest/.

@@ -80,10 +80,11 @@ def aphiaExternalIDByAphiaID(id, type):
     return do_get(url)
 
 
-@lru_cache(maxsize=2000)
+#@lru_cache(maxsize=2000)
 def _aphiaRecordsByMatchNamesCacheable(q):
     url = worms_url() + "AphiaRecordsByMatchNames?" + q
-    return do_get(url)
+    results = do_get(url)
+    return results
 
 
 def aphiaRecordsByMatchNames(names, marine_only=True):
@@ -97,7 +98,7 @@ def aphiaRecordsByMatchNames(names, marine_only=True):
     names = ["" if n is None else n for n in names]
     results = []
 
-    for n in batch(names):
+    for n in batch(names): #  TODO: bug in case of less than 50 names
         q = "&".join(["scientificnames[]=" + name for name in n])
         q = q + "&marine_only=" + utils.render_bool(marine_only)
         res = _aphiaRecordsByMatchNamesCacheable(q)

@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
         logging.disable(logging.CRITICAL)
 
     def testAphiaRecordByExternalID(self):
-        res = pyworms.aphiaRecordByExternalID(self.ncbiID)
+        res = pyworms.aphiaRecordByExternalID(self.ncbiID, type="ncbi")
         self.assertIsNotNone(res)
 
     def testAphiaRecordByAphiaID(self):
@@ -68,9 +68,9 @@ class Test(unittest.TestCase):
 
     def testCache(self):
         pyworms.aphiaRecordByAphiaID.cache_clear()
-        self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
+        self.assertEqual(pyworms.aphiaRecordByAphiaID.cache_info()[3], 0)
         pyworms.aphiaRecordByAphiaID(123459)
-        self.assertEquals(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
+        self.assertEqual(pyworms.aphiaRecordByAphiaID.cache_info()[3], 1)
 
     def testAphiaRecordsByMatchNames2(self):
         names = [
@@ -107,19 +107,25 @@ class Test(unittest.TestCase):
         ]
         res = pyworms.aphiaRecordsByMatchNames(names)
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), len(names))
+        self.assertEqual(len(res), len(names))
+
+    def testAphiaRecordsByMatchNames3(self):
+        names = ["Leporellus vittatus", "Leporinus bistriatus", "Cetopsis candiru", "Vandellia", "Bryconops", "Myleus setiger"]
+        res = pyworms.aphiaRecordsByMatchNames(names)
+        self.assertIsNotNone(res)
+        self.assertEqual(len(res), len(names))
 
     def testAphiaRecordsByMatchNames(self):
         res = pyworms.aphiaRecordsByMatchNames(["Abra albo", "Lanice conchilega"])
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), 2)
-        self.assertEquals(len(res[0]), 1)
-        self.assertEquals(len(res[1]), 1)
-        self.assertEquals(res[0][0]["match_type"], "phonetic")
-        self.assertEquals(res[1][0]["match_type"], "exact")
+        self.assertEqual(len(res), 2)
+        self.assertEqual(len(res[0]), 1)
+        self.assertEqual(len(res[1]), 1)
+        self.assertEqual(res[0][0]["match_type"], "phonetic")
+        self.assertEqual(res[1][0]["match_type"], "exact")
         res = pyworms.aphiaRecordsByMatchNames("Abra albo")
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), 1)
+        self.assertEqual(len(res), 1)
         names = ["Barbatia tenella (Reeve, 1844)",
                  "Mitra kantori Poppe, Tagaro & Salisbury, 2009",
                  "Diminovula culmen (Cate, 1973)",
@@ -185,22 +191,22 @@ class Test(unittest.TestCase):
                  "Vasticardium elongatum coralense (Vidal, 1993)"]
         res = pyworms.aphiaRecordsByMatchNames(names)
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), len(names))
+        self.assertEqual(len(res), len(names))
         names = ["Barbatia tenella (Reeve, 1844)",
                  None,
                  "Mitra kantori Poppe, Tagaro & Salisbury, 2009",
                  "Diminovula culmen (Cate, 1973)"]
         res = pyworms.aphiaRecordsByMatchNames(names)
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), 4)
+        self.assertEqual(len(res), 4)
 
     def testAphiaRecordsByMatchNamesNoMatches(self):
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx", "yyyyyyyy"])
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), 2)
+        self.assertEqual(len(res), 2)
         res = pyworms.aphiaRecordsByMatchNames(["xxxxxxxx"] * 60)
         self.assertIsNotNone(res)
-        self.assertEquals(len(res), 60)
+        self.assertEqual(len(res), 60)
 
     def testAphiaRecordsByDate(self):
         res = pyworms.aphiaRecordsByDate(datetime.datetime.utcnow() - datetime.timedelta(hours=10))
