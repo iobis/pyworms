@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: If you use this work, please cite it as below.
+title: Python WoRMS client
+type: software
+abstract: Python client for the WoRMS REST service
+url: https://github.com/iobis/pyworms
+license: MIT
+authors:
+  - given-names: Pieter
+    family-names: Provoost
+    orcid: "https://orcid.org/0000-0002-4236-0384"
+  - family-names: Filipe
+  - given-names: Mathew
+    family-names: Biddle
+  - name: Intergovernmental Oceanographic Commission of UNESCO
+    alias: IOC-UNESCO
+    website: "https://obis.org"
+date-released: 2025-07-22
